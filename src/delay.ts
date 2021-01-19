@@ -7,7 +7,6 @@ config();
 const clientId = process.env.clientId!;
 const clientSecret = process.env.clientSecret!;
 const clusterId = process.env.clusterId!;
-let count = 0;
 
 const zbc = new ZBClient({
   camundaCloud: {
@@ -18,11 +17,20 @@ const zbc = new ZBClient({
 });
 
 async function main() {
-  await zbc.deployWorkflow("./bpmn/model.bpmn");
-  while (true) {
-    await zbc.createWorkflowInstanceWithResult("null-op", {});
-    stdout(`Count: ${count++}`);
-  }
+  let time = 0;
+  await zbc.deployWorkflow("./bpmn/delay.bpmn");
+  console.log("Requesting result with 11m delay");
+  setInterval(() => {
+    time += 30;
+    stdout(`${time / 60}m elapsed...`);
+  }, 30000);
+  console.log(
+    await zbc.createWorkflowInstanceWithResult({
+      bpmnProcessId: "delayed-result",
+      variables: {},
+      requestTimeout: 12 * 60 * 1000,
+    })
+  );
 }
 
 main();

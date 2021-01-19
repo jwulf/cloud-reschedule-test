@@ -5,16 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/main.ts"
+    "start": "ts-node src/main.ts",
+    "delayed": "ts-node src/delay.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "single-line-log": "^1.1.2",
     "zeebe-node": "^0.25.1"
   },
   "devDependencies": {
+    "@types/single-line-log": "^1.1.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
   }
